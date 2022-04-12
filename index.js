@@ -13,6 +13,15 @@ const friends = [
     }
 ];
 
+app.use((req,res,next) => {
+    const start = Date.now();
+    // make sure to call next so it goes to the next step!
+    next();
+    // actions go here that execute before the request goes back
+    const delta = Date.now() - start;
+    console.log(`${req.method} ${req.url} took ${delta} seconds`);
+})
+
 app.get('/friends', (req, res) => {
     res.json(friends);
 });
