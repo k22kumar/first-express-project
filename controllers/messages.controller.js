@@ -5,7 +5,11 @@ function getMessages(req, res) {
     // res.send('sample message');
     // this needs to be an absolute path from the root of your system
     // __dirname builtin variable to get the name of the folder where the current file lives, in this case the controllers folder
-    res.sendFile(path.join(__dirname, '..', 'public', 'images', 'KirbyFaceForward.png'));
+    // res.sendFile(path.join(__dirname, '..', 'public', 'images', 'KirbyFaceForward.png'));
+    res.render('messages', {
+        title: 'messages',
+        friend: 'Elon Musk'
+    })
 };
 
 function postMessage(req, res) {
