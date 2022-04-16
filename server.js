@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const friendsRouter = require('./routes/friends.router');
 const messagesRouter = require('./routes/messages.router');
@@ -15,7 +16,9 @@ app.use((req,res,next) => {
     // baseUrl + path specific for that router 
     console.log(`${req.method} ${req.baseUrl}${req.url} took ${delta} seconds`);
 });
-
+// The public folder is available at the path: 'site'
+// the path we send is is relative to the path we launch our node application, use path join function to always get the correct path
+app.use('/site', express.static(path.join(__dirname, 'public')));
 // built in middleware to parse JSON
 app.use(express.json());
 
