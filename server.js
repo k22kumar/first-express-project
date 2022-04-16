@@ -5,6 +5,9 @@ const friendsRouter = require('./routes/friends.router');
 const messagesRouter = require('./routes/messages.router');
 
 const app = express();
+// tell node what templating engine to use and set views
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 const PORT = 3000;
 
 app.use((req,res,next) => {
@@ -22,6 +25,12 @@ app.use('/site', express.static(path.join(__dirname, 'public')));
 // built in middleware to parse JSON
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.render('index', {
+        title: 'cool title',
+        caption: 'Kirby'
+    });
+})
 // Mounts the router under the path '/friends'
 app.use('/friends', friendsRouter);
 app.use('/messages', messagesRouter);
