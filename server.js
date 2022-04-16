@@ -1,6 +1,8 @@
 const express = require('express');
-const friendsController = require('./controllers/friends.controller');
-const messagesController = require('./controllers/messages.controller');
+
+const friendsRouter = require('./routes/friends.router');
+const messagesRouter = require('./routes/messages.router');
+
 const app = express();
 const PORT = 3000;
 
@@ -10,18 +12,16 @@ app.use((req,res,next) => {
     next();
     // actions go here that execute before the request goes back
     const delta = Date.now() - start;
-    console.log(`${req.method} ${req.url} took ${delta} seconds`);
+    // baseUrl + path specific for that router 
+    console.log(`${req.method} ${req.baseUrl}${req.url} took ${delta} seconds`);
 });
 
 // built in middleware to parse JSON
 app.use(express.json());
 
-app.get('/friends', friendsController.getFriends);
-app.post('/friends',friendsController.postFriend);
-app.get('/friends/:friendId', friendsController.getFriend);
-
-app.get('/messages', messagesController.getMessages);
-app.post('/message', messagesController.postMessage);
+// Mounts the router under the path '/friends'
+app.use('/friends', friendsRouter);
+app.use('/messages', messagesRouter);
 
 app.get('/', friendsController);
 
